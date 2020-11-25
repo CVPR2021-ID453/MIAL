@@ -174,10 +174,11 @@ The explanation of each code file or folder is as follows:
 
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called from `./apis/train.py`
 - **configs**: Configuration folder, including runnning settings, model settings, dataset settings and other custom settings for active learning and MIAL.
+  - **MIAL.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called from `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 - **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
 - **tools**: Outer training and test code for MIAL.
-  - **utils**: Utility functions.
+  - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 - **fsdet**
