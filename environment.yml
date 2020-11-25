@@ -82,4 +82,4 @@ dependencies:
     - terminaltables==3.1.0
     - thop==0.0.31-2005241907
     - yapf==0.30.0
-prefix: /home/yuantn/anaconda3/envs/mmdet
+prefix: /home/anaconda3/envs/mmdet
