@@ -1,11 +1,32 @@
 addict==2.2.1
 blessings==1.7
+cycler==0.10.0
+cython==0.29.21
+future==0.18.2
+gpustat==0.6.0
+kiwisolver==1.2.0
+matplotlib==3.3.0
+mmcv==1.0.5
+mmcv-full==1.0.5
+mmpycocotools==12.0.3
+nvidia-ml-py3==7.352.0
+opencv-python==4.3.0.36
+pandas==1.1.1
+psutil==5.7.2
+pyparsing==2.4.7
+python-dateutil==2.8.1
+pytz==2020.1
+pyyaml==5.3.1
+seaborn==0.10.1
+terminaltables==3.1.0
+thop==0.0.31-2005241907
+yapf==0.30.0
+addict==2.2.1
+blessings==1.7
 certifi==2020.6.20
 cycler==0.10.0
 Cython==0.29.21
 future==0.18.2
-gpustat==0.6.0
-joblib @ file:///tmp/build/80754af9/joblib_1601912903842/work
 kiwisolver==1.2.0
 matplotlib==3.3.0
 mkl-fft==1.1.0
@@ -14,24 +35,24 @@ mkl-service==2.3.0
 mmcv==1.0.5
 mmcv-full==1.0.5
 mmpycocotools==12.0.3
-numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1603479632437/work
+numpy
 nvidia-ml-py3==7.352.0
 olefile==0.46
 opencv-python==4.3.0.36
 pandas==1.1.1
-Pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1594213010297/work
+Pillow
 psutil==5.7.2
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.1
 PyYAML==5.3.1
-scikit-learn @ file:///tmp/build/80754af9/scikit-learn_1598376882706/work
-scipy @ file:///tmp/build/80754af9/scipy_1597686620742/work
+scikit-learn
+scipy
 seaborn==0.10.1
-six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
+six
 terminaltables==3.1.0
 thop==0.0.31.post2005241907
-threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+threadpoolctl
 torch==1.6.0
 torchvision==0.7.0
 xmltodict==0.12.0
