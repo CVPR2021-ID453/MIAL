@@ -1,9 +1,9 @@
+data_root = '/DATA/disk1/Datasets/VOCdevkit/'
+
 _base_ = [
     './_base_/retinanet_r50_fpn.py', './_base_/voc0712.py',
     './_base_/default_runtime.py'
 ]
-
-data_root = '/DATA/disk1/Datasets/VOCdevkit/'
 
 # dataset settings
 data = dict(
