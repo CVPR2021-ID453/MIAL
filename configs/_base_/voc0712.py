@@ -1,4 +1,4 @@
-data_root = '/DATA/disk1/Datasets/VOCdevkit/'
+data_root = '$YOUR_DATASET_PATH/VOCdevkit/'
 # dataset settings
 dataset_type = 'VOCDataset'
 
