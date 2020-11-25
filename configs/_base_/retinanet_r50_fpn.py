@@ -20,7 +20,7 @@ model = dict(
         num_outs=5),
     bbox_head=dict(
         type='MIALRetinaHead',
-        num_classes=80,
+        C=80,
         in_channels=256,
         stacked_convs=4,
         feat_channels=256,
@@ -34,13 +34,13 @@ model = dict(
             type='DeltaXYWHBBoxCoder',
             target_means=[.0, .0, .0, .0],
             target_stds=[1.0, 1.0, 1.0, 1.0]),
-        loss_cls=dict(
+        FL=dict(
             type='FocalLoss',
             use_sigmoid=True,
             gamma=2.0,
             alpha=0.25,
             loss_weight=1.0),
-        loss_bbox=dict(type='L1Loss', loss_weight=1.0)))
+        SmoothL1=dict(type='L1Loss', loss_weight=1.0)))
 # training and testing settings
 train_cfg = dict(
     assigner=dict(
@@ -51,7 +51,8 @@ train_cfg = dict(
         ignore_iof_thr=-1),
     allowed_border=-1,
     pos_weight=-1,
-    debug=False)
+    debug=False,
+)
 test_cfg = dict(
     nms_pre=1000,
     min_bbox_size=0,
