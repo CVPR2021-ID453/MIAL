@@ -23,9 +23,9 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
     def forward_train(self,
                       x,
                       img_metas,
-                      gt_bboxes,
-                      gt_labels=None,
-                      gt_bboxes_ignore=None,
+                      y_loc_img,
+                      y_cls_img=None,
+                      y_loc_img_ignore=None,
                       proposal_cfg=None,
                       **kwargs):
         """
@@ -33,11 +33,11 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
             x (list[Tensor]): Features from FPN.
             img_metas (list[dict]): Meta information of each image, e.g.,
                 image size, scaling factor, etc.
-            gt_bboxes (Tensor): Ground truth bboxes of the image,
+            y_loc_img (Tensor): Ground truth bboxes of the image,
                 shape (num_gts, 4).
-            gt_labels (Tensor): Ground truth labels of each box,
+            y_cls_img (Tensor): Ground truth labels of each box,
                 shape (num_gts,).
-            gt_bboxes_ignore (Tensor): Ground truth bboxes to be
+            y_loc_img_ignore (Tensor): Ground truth bboxes to be
                 ignored, shape (num_ignored_gts, 4).
             proposal_cfg (mmcv.Config): Test / postprocessing configuration,
                 if None, test_cfg would be used
@@ -47,51 +47,57 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
                 losses: (dict[str, Tensor]): A dictionary of loss components.
                 proposal_list (list[Tensor]): Proposals of each image.
         """
-        outs1, outs2, reg, mil_score = self(x)
-        # init loss two inputs
+        y_head_f_1, y_head_f_2, y_head_f_r, y_head_f_mil = self(x)
+        # Label set training
         if losstype.losstype == 0:
-            outs = (outs1, reg, mil_score)
-            if gt_labels is None:
-                loss_inputs = outs + (gt_bboxes, img_metas)
+            outs = (y_head_f_1, y_head_f_r, y_head_f_mil)
+            if y_cls_img is None:
+                loss_inputs = outs + (y_loc_img, img_metas)
             else:
-                loss_inputs = outs + (gt_bboxes, gt_labels, img_metas)
-            losses1 = self.loss(*loss_inputs, gt_bboxes_ignore=gt_bboxes_ignore)
-            outs = (outs2, reg, mil_score)
-            if gt_labels is None:
-                loss_inputs = outs + (gt_bboxes, img_metas)
+                loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
+            L_det_1 = self.L_det(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
+            outs = (y_head_f_2, y_head_f_r, y_head_f_mil)
+            if y_cls_img is None:
+                loss_inputs = outs + (y_loc_img, img_metas)
             else:
-                loss_inputs = outs + (gt_bboxes, gt_labels, img_metas)
-            losses2 = self.loss(*loss_inputs, gt_bboxes_ignore=gt_bboxes_ignore)
-            losses_cls = list(map(lambda m, n: (m + n)/2, losses1['loss_cls'], losses2['loss_cls']))
-            losses_bbox = list(map(lambda m, n: (m + n)/2, losses1['loss_bbox'], losses2['loss_bbox']))
-            losses_mil = list(map(lambda m, n: (m + n)/2, losses1['loss_mil'], losses2['loss_mil']))
-            losses = dict(loss_cls=losses_cls, loss_bbox=losses_bbox, loss_mil=losses_mil)
-
-        # agreement three inputs
+                loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
+            L_det_2 = self.L_det(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
+            l_det_cls = list(map(lambda m, n: (m + n)/2, L_det_1['l_det_cls'], L_det_2['l_det_cls']))
+            l_det_loc = list(map(lambda m, n: (m + n)/2, L_det_1['l_det_loc'], L_det_2['l_det_loc']))
+            l_mil = list(map(lambda m, n: (m + n)/2, L_det_1['l_mil'], L_det_2['l_mil']))
+            L_det = dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_mil=l_mil)
+            if proposal_cfg is None:
+                return L_det
+            else:
+                proposal_list = self.get_bboxes(*outs, img_metas, cfg=proposal_cfg)
+                return L_det, proposal_list
+        # Re-weighting and minimizing instance uncertainty
         elif losstype.losstype == 1:
-            outs = ((outs1, outs2), reg, mil_score)
-            if gt_labels is None:
-                loss_inputs = outs + (gt_bboxes, img_metas)
+            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_f_mil)
+            if y_cls_img is None:
+                loss_inputs = outs + (y_loc_img, img_metas)
             else:
-                loss_inputs = outs + (gt_bboxes, gt_labels, img_metas)
-            loss = self.loss_min(*loss_inputs, gt_bboxes_ignore=gt_bboxes_ignore)
-            losses = dict(loss_cls=loss['loss_cls'],
-                          loss_bbox=loss['loss_bbox'],
-                          loss_agr=loss['loss_agr'],
-                          loss_mil=loss['loss_mil'])
-
-        # discrepancy
-        else:
-            outs = ((outs1, outs2), reg, mil_score)
-            if gt_labels is None:
-                loss_inputs = outs + (gt_bboxes, img_metas)
+                loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
+            loss = self.L_wave_min(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
+            L_wave_min = dict(l_det_cls=loss['l_det_cls'], l_det_loc=loss['l_det_loc'],
+                              l_wave_dis=loss['l_wave_dis'], l_mil=loss['l_mil'])
+            if proposal_cfg is None:
+                return L_wave_min
             else:
-                loss_inputs = outs + (gt_bboxes, gt_labels, img_metas)
-            loss = self.loss_max(*loss_inputs, gt_bboxes_ignore=gt_bboxes_ignore)
-            losses = dict(loss_cls=loss['loss_cls'], loss_bbox=loss['loss_bbox'], loss_dsc=loss['loss_dsc'])
-
-        if proposal_cfg is None:
-            return losses
+                proposal_list = self.get_bboxes(*outs, img_metas, cfg=proposal_cfg)
+                return L_wave_min, proposal_list
+        # Re-weighting and maximizing instance uncertainty
         else:
-            proposal_list = self.get_bboxes(*outs, img_metas, cfg=proposal_cfg)
-            return losses, proposal_list
+            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_f_mil)
+            if y_cls_img is None:
+                loss_inputs = outs + (y_loc_img, img_metas)
+            else:
+                loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
+            loss = self.L_wave_max(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
+            L_wave_max = dict(l_det_cls=loss['l_det_cls'], l_det_loc=loss['l_det_loc'],
+                              l_wave_dis_minus=loss['l_wave_dis_minus'])
+            if proposal_cfg is None:
+                return L_wave_max
+            else:
+                proposal_list = self.get_bboxes(*outs, img_metas, cfg=proposal_cfg)
+                return L_wave_max, proposal_list
