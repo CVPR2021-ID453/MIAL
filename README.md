@@ -47,3 +47,9 @@ tar -xf VOCtrainval_06-Nov-2007.tar
 tar -xf VOCtest_06-Nov-2007.tar
 tar -xf VOCtrainval_11-May-2012.tar
 ```
+After that, please modify the corresponding dataset directory in this repository, they are located in:
+```
+Line 1 in configs/debug.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+Line 1 in configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+```
+Please change these two "$YOUR_DATASET_PATH" to your actual dataset directory (i.e., the directory where you put the downloaded VOC tar file), and please use the absolute path but not a relative path.
