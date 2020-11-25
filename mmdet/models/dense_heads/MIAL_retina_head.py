@@ -1,7 +1,7 @@
 import torch.nn as nn
 from mmcv.cnn import ConvModule, bias_init_with_prob, normal_init
 from ..builder import HEADS
-from .anchor_head import AnchorHead
+from .MIAL_head import MIALHead
 import torch
 import torch.nn.functional as F
 from mmdet.core import (build_anchor_generator, build_assigner,
@@ -10,7 +10,7 @@ from ..losses import smooth_l1_loss
 
 
 @HEADS.register_module()
-class RetinaHead(AnchorHead):
+class MIALRetinaHead(MIALHead):
     r"""An anchor-based head used in `RetinaNet
     <https://arxiv.org/pdf/1708.02002.pdf>`_.
 
@@ -19,7 +19,7 @@ class RetinaHead(AnchorHead):
 
     Example:
         >>> import torch
-        >>> self = RetinaHead(11, 7)
+        >>> self = MIALRetinaHead(11, 7)
         >>> x = torch.rand(1, 7, 32, 32)
         >>> cls_score, bbox_pred = self.forward_single(x)
         >>> # Each anchor predicts a score for each class except background
@@ -45,7 +45,7 @@ class RetinaHead(AnchorHead):
         self.stacked_convs = stacked_convs
         self.conv_cfg = conv_cfg
         self.norm_cfg = norm_cfg
-        super(RetinaHead, self).__init__(
+        super(MIALRetinaHead, self).__init__(
             num_classes,
             in_channels,
             anchor_generator=anchor_generator,
