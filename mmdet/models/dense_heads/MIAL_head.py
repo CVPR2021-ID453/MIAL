@@ -65,7 +65,7 @@ class Myrel1loss(nn.Module):
 
 
 @HEADS.register_module()
-class AnchorHead(BaseDenseHead):
+class MIALHead(BaseDenseHead):
     """Anchor-based head (RPN, RetinaNet, SSD, etc.).
 
     Args:
@@ -109,7 +109,7 @@ class AnchorHead(BaseDenseHead):
                      type='SmoothL1Loss', beta=1.0 / 9.0, loss_weight=1.0),
                  train_cfg=None,
                  test_cfg=None):
-        super(AnchorHead, self).__init__()
+        super(MIALHead, self).__init__()
         self.in_channels = in_channels
         self.num_classes = num_classes
         self.feat_channels = feat_channels
@@ -855,7 +855,7 @@ class AnchorHead(BaseDenseHead):
 
         Example:
             >>> import mmcv
-            >>> self = AnchorHead(
+            >>> self = MIALHead(
             >>>     num_classes=9,
             >>>     in_channels=1,
             >>>     anchor_generator=dict(
