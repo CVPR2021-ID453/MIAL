@@ -1,5 +1,0 @@
-dependencies:
-
-  - pip:
-
-prefix: /home/anaconda3/envs/mmdet
