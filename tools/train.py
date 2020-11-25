@@ -26,7 +26,7 @@ from mmdet.utils.active_datasets import *
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('config', help='train config file path')
-    parser.add_argument('--work_direction', help='the dir to save logs and models')
+    parser.add_argument('--work_directory', help='the dir to save logs and models')
     parser.add_argument('--resume-from', help='the checkpoint file to resume from')
     parser.add_argument('--no-validate', action='store_false',
                         help='whether not to evaluate the checkpoint during training')
@@ -55,13 +55,13 @@ def main():
     # set cudnn_benchmark
     if cfg.get('cudnn_benchmark', False):
         torch.backends.cudnn.benchmark = True
-    # work_direction is determined in this priority: CLI > segment in file > filename
-    if args.work_direction is not None:
-        # update configs according to CLI args if args.work_direction is not None
-        cfg.work_direction = args.work_direction
-    elif cfg.get('work_direction', None) is None:
-        # use config filename as default work_direction if cfg.work_direction is None
-        cfg.work_direction = osp.join('./work_direction/retina', osp.splitext(osp.basename(args.config))[0])
+    # work_directory is determined in this priority: CLI > segment in file > filename
+    if args.work_directory is not None:
+        # update configs according to CLI args if args.work_directory is not None
+        cfg.work_directory = args.work_directory
+    elif cfg.get('work_directory', None) is None:
+        # use config filename as default work_directory if cfg.work_directory is None
+        cfg.work_directory = osp.join('./work_directory/retina', osp.splitext(osp.basename(args.config))[0])
     if args.resume_from is not None:
         cfg.resume_from = args.resume_from
     if args.gpu_ids is not None:
@@ -74,13 +74,13 @@ def main():
     else:
         distributed = True
         init_dist(args.launcher, **cfg.dist_params)
-    # create work_direction
-    mmcv.mkdir_or_exist(osp.abspath(cfg.work_direction))
+    # create work_directory
+    mmcv.mkdir_or_exist(osp.abspath(cfg.work_directory))
     # dump config
-    cfg.dump(osp.join(cfg.work_direction, osp.basename(args.config)))
+    cfg.dump(osp.join(cfg.work_directory, osp.basename(args.config)))
     # init the logger before other steps
     timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    log_file = osp.join(cfg.work_direction, f'{timestamp}.log')
+    log_file = osp.join(cfg.work_directory, f'{timestamp}.log')
     logger = get_root_logger(log_file=log_file, log_level=cfg.log_level)
     # init the meta dict to record some important information such as environment info and seed, which will be logged
     meta = dict()
@@ -109,14 +109,14 @@ def main():
     # last_timestamp = '/20201013_154728'
     # # Please change it to the cycle which you want to load data from.
     # load_cycle = 0
-    # X_L = np.load(cfg.work_direction + last_timestamp +'/X_L_' + str(load_cycle) + '.npy')
-    # X_U = np.load(cfg.work_direction + last_timestamp +'/X_U_' + str(load_cycle) + '.npy')
+    # X_L = np.load(cfg.work_directory + last_timestamp +'/X_L_' + str(load_cycle) + '.npy')
+    # X_U = np.load(cfg.work_directory + last_timestamp +'/X_U_' + str(load_cycle) + '.npy')
     # cfg.cycles = list(range(load_cycle, 7))
 
-    cfg.work_direction = cfg.work_direction + '/' + timestamp
-    mmcv.mkdir_or_exist(osp.abspath(cfg.work_direction))
-    np.save(cfg.work_direction + '/X_L_' + '0' + '.npy', X_L)
-    np.save(cfg.work_direction + '/X_U_' + '0' + '.npy', X_U)
+    cfg.work_directory = cfg.work_directory + '/' + timestamp
+    mmcv.mkdir_or_exist(osp.abspath(cfg.work_directory))
+    np.save(cfg.work_directory + '/X_L_' + '0' + '.npy', X_L)
+    np.save(cfg.work_directory + '/X_U_' + '0' + '.npy', X_U)
     initial_step = cfg.lr_config.step
     theta_f_1 = ['bbox_head.f_1_convs.0.conv.weight', 'bbox_head.f_1_convs.0.conv.bias',
                  'bbox_head.f_1_convs.1.conv.weight', 'bbox_head.f_1_convs.1.conv.bias',
@@ -142,7 +142,7 @@ def main():
 
         # # Please change it to the epoch which you want to load model at.
         # model_file_name = '/latest.pth'
-        # model.load_state_dict(torch.load(cfg.work_direction[:18] + last_timestamp + model_file_name)['state_dict'])
+        # model.load_state_dict(torch.load(cfg.work_directory[:18] + last_timestamp + model_file_name)['state_dict'])
 
         # load dataset
         datasets = [build_dataset(cfg.data.train)]
@@ -259,8 +259,8 @@ def main():
             # update labeled set
             X_L, X_U = update_X_L(uncertainty, X_all, X_L, cfg.X_S_size)
             # save set and model
-            np.save(cfg.work_direction + '/X_L_' + str(cycle+1) + '.npy', X_L)
-            np.save(cfg.work_direction + '/X_U_' + str(cycle+1) + '.npy', X_U)
+            np.save(cfg.work_directory + '/X_L_' + str(cycle+1) + '.npy', X_L)
+            np.save(cfg.work_directory + '/X_U_' + str(cycle+1) + '.npy', X_U)
 
 
 if __name__ == '__main__':
