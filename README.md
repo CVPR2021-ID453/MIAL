@@ -20,18 +20,17 @@ You may change the name of the conda environment if you like, but you will need 
 
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) if you encounter any problems.
 
-## Modification in mmcv packages
+## Modification in mmcv Packages
 
-To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the "epoch_based_runner.py" in the mmcv package.
+To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ``` epoch_based_runner.py ``` in the mmcv package.
 
-Considering that this will affect all code that uses this environment, so I suggest you set up a separate environment for MIAL (i.e., the "mmdet" environment created above).
+Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MIAL (i.e., the "mmdet" environment created above).
 
 ```
 cp -v epoch_based_runner.py ~/anaconda3/envs/mmdet/lib/python3.7/site-packages/mmcv/runner/
 ```
 
-
-## Datasets preparation
+## Datasets Preparation
 
 Please download VOC2007 datasets (trainval+test) and VOC2012 datasets (trainval) from:
 
@@ -69,4 +68,13 @@ Line 1 in configs/debug.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 in configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 Please change the "$YOUR_DATASET_PATH"s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
+
 And please use the absolute path (i.e., start with "~/" or "/") but not a relative path (i.e., start with "./" or "../"）.
+
+## Training and Test
+
+We recommend you to use a GPU but not a CPU to train and test, because it will greatly shorten the time.
+
+And we also recommend you to use only 1 GPU to do, because there may be some problems on arranging the end of two dataloaders when you use several GPUs. The more GPUs you use, the more likely the training or test iteration will be interrupted suddenly.
+
+If you use only 1 GPU, you can use the ``` script.sh ``` file directly as below:
