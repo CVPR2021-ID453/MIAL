@@ -113,7 +113,7 @@ You can also use other files in the directory ``` './work_dirs/retina/ ``` if yo
 
   You can load the model state dictionary from them.
 
-  An example code for loading these files is the Line 109, 144-145 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 109, 143-145 in the `./tools/train.py` file (which are in comments now).
 
 - **txt file `trainval_l07.txt`, `trainval_u07.txt`, `trainval_l12.txt` and `trainval_u12.txt` in each `cycle$CYCLE` directory**
 
