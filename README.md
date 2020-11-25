@@ -22,7 +22,7 @@ Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/t
 
 ## Modification in mmcv packages
 
-To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the "epoch_based_runner" python file in the mmcv packages.
+To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the "epoch_based_runner.py" in the mmcv package.
 
 Considering that this will affect all code that uses this environment, so I suggest you set up a separate environment for MIAL (i.e., the "mmdet" environment created above).
 
@@ -55,6 +55,7 @@ And after that, please ensure the file directory tree is as below:
 ```
 You may also use the following commands directly:
 ```
+cd $YOUR_DATASET_PATH
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
@@ -67,4 +68,5 @@ After that, please modify the corresponding dataset directory in this repository
 Line 1 in configs/debug.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 in configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
-Please change these two "$YOUR_DATASET_PATH" to your actual dataset directory (i.e., the directory where you put the downloaded VOC tar file), and please use the absolute path but not a relative path.
+Please change the "$YOUR_DATASET_PATH"s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
+And please use the absolute path (i.e., start with "~/" or "/") but not a relative path (i.e., start with "./" or "../"）.
