@@ -78,7 +78,7 @@ def train_detector(model, dataset, cfg, distributed=False, validate=False, times
     # build runner
     params = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = torch.optim.SGD(params, lr=cfg.optimizer.lr, momentum=0.9, weight_decay=0.0005)
-    runner = EpochBasedRunner(model, optimizer=optimizer, work_dir=cfg.work_direction, logger=logger, meta=meta)
+    runner = EpochBasedRunner(model, optimizer=optimizer, work_dir=cfg.work_directory, logger=logger, meta=meta)
     # an ugly workaround to make .log and .log.json filenames the same
     runner.timestamp = timestamp
     # fp16 setting
