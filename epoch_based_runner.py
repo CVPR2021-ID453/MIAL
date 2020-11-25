@@ -142,8 +142,8 @@ class EpochBasedRunner(BaseRunner):
                 if mode == 'train':
                     self._max_iters = self._max_epochs * len(data_loaders[i])
                     break
-            work_direction = self.work_dir if self.work_dir is not None else 'NONE'
-            self.logger.info('Start running, host: %s, work_direction: %s', get_host_info(), work_direction)
+            work_directory = self.work_dir if self.work_dir is not None else 'NONE'
+            self.logger.info('Start running, host: %s, work_directory: %s', get_host_info(), work_directory)
             self.logger.info('workflow: %s, max: %d epochs', workflow, max_epochs)
             self.call_hook('before_run')
             while self.epoch < max_epochs:
@@ -173,8 +173,8 @@ class EpochBasedRunner(BaseRunner):
                 if mode == 'train':
                     self._max_iters = self._max_epochs * len(data_loaders[i])
                     break
-            work_direction = self.work_dir if self.work_dir is not None else 'NONE'
-            self.logger.info('Start running, host: %s, work_direction: %s', get_host_info(), work_direction)
+            work_directory = self.work_dir if self.work_dir is not None else 'NONE'
+            self.logger.info('Start running, host: %s, work_directory: %s', get_host_info(), work_directory)
             self.logger.info('workflow: %s, max: %d epochs', workflow, max_epochs)
             self.call_hook('before_run')
             while self.epoch < max_epochs:
