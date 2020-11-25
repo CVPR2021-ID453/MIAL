@@ -91,11 +91,11 @@ The log file will not flush in the terminal, but will be saved and updated in th
 
 You can also use other files in the directory ``` './work_dirs/retina/ ``` if you like, they are as follows:
 
-### JSON file `$TIMESTAMP.log.json`
+  * #### JSON file `$TIMESTAMP.log.json`
 
 You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/retina/$TIMESTAMP.log` file.
 
-### npy file `L_cycle_$CYCLE.npy` and `U_cycle_$CYCLE.npy`
+  * #### npy file `L_cycle_$CYCLE.npy` and `U_cycle_$CYCLE.npy`
 
 The `$CYCLE` is an integer from 0 to 6, which are the active learning cycles.
 
@@ -105,7 +105,7 @@ The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to
 
 An example code for loading these files is the Line 135-138 in the `./tools/train.py` file (which are in comments now).
 
-### pth file `epoch_$EPOCH.pth` and `latest.pth`
+  * #### pth file `epoch_$EPOCH.pth` and `latest.pth`
 
 The `$EPOCH` is an integer from 0 to 2, which are the epochs of the last label set training.
 
@@ -113,7 +113,7 @@ You can load the model state dictionary from them.
 
 An example code for loading these files is the Line 174 in the `./tools/train.py` file (which are in comments now).
 
-### txt file `trainval_l07.txt`, `trainval_u07.txt`, `trainval_l12.txt` and `trainval_u12.txt` in each `cycle$CYCLE` directory
+  * #### txt file `trainval_l07.txt`, `trainval_u07.txt`, `trainval_l12.txt` and `trainval_u12.txt` in each `cycle$CYCLE` directory
 
 The `$CYCLE` is the same as above.
 
