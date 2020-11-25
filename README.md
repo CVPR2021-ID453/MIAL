@@ -174,7 +174,7 @@ The explanation of each code file or folder is as follows:
 
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called from `./apis/train.py`
 - **configs**: Configuration folder, including runnning settings, model settings, dataset settings and other custom settings for active learning and MIAL.
-  - **_base_**: 
+  - **\_base\_**: 
     - **default_runtime.py**:
     - **retinanet_r50_fpn.py**:
     - **voc0712.py**:
