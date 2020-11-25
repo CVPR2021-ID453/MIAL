@@ -70,7 +70,7 @@ Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 Please change the ``` $YOUR_DATASET_PATH ```s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
 
-And please use the absolute path (i.e., start with ``` ~/ ``` or ``` / ```) but not a relative path (i.e., start with ``` ./ ``` or ``` ../ ```）.
+And please use the absolute path (i.e., start with ` / `) but not a relative path (i.e., start with ` ./ ` or ` ../ `）.
 
 ## Training and Test
 
