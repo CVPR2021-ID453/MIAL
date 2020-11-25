@@ -1,13 +1,23 @@
 ## Introduction
 
-This is the code for Multiple Instance Active Learning for Object Detection, ID 453 for CVPR 2021. Thanks for your review.
+This is the code for Multiple Instance Active Learning for Object Detection, ID 453 for CVPR 2021.
+
+Thanks for your review.
 
 ## Environment Installation
+
+A Linux platform and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
+
+After anaconda3 installation, you can create a conda environment and install the required packages as below:
+
 ```
 conda create -n mmdet python=3.7 -y
 conda activate mmdet
 pip install -r requirements.txt
 ```
+
+You may change the name of the conda environment if you like, but you will need to pay attention to the following steps correspondingly if you do so.
+
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) if you encounter any problems.
 
 ## Modification in mmcv packages
