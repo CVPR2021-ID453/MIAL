@@ -4,13 +4,16 @@ This is the code for *Multiple Instance Active Learning for Object Detection*, a
 
 ## Environment Installation
 
-A Linux platform and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
+A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
+
+A TITAN V GPU and [CUDA 10.2](https://developer.nvidia.com/cuda-toolkit-archive) with [CuDNN 7.6.5](https://developer.nvidia.com/cudnn) is recommended, since they can speed up model training.
 
 After anaconda3 installation, you can create a conda environment and install the required packages as below:
 
 ```
 conda create -n mmdet python=3.7 -y
 conda activate mmdet
+pip install numpy
 pip install -r requirements.txt
 ```
 
@@ -77,6 +80,7 @@ And we also recommend you to use a single GPU, because the usage of multi-GPU ma
 
 If you use only 1 GPU, you can use the ``` script.sh ``` file directly as below:
 ```
+chmod 777 ./script.sh
 ./script.sh $YOUR_GPU_ID
 ```
 Please change the ``` $YOUR_GPU_ID ``` above to your actual GPU ID number (usually a non-negative number).
@@ -85,7 +89,7 @@ Please ignore the error ``` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.lo
 
 The ``` script.sh ``` file will use the GPU with the ID number ``` $YOUR_GPU_ID ``` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
 
-The log file will not flush in the terminal, but will be saved and updated in the file ```./log_nohup/nohup_$YOUR_GPU_ID.log``` and ``` ./work_dirs/retina/$TIMESTAMP.log ``` . These two logs are the same. You can change the directions and names of the latter log files in Line 36 of ```./configs/MIAL.py``` .
+The log file will not flush in the terminal, but will be saved and updated in the file ```./log_nohup/nohup_$YOUR_GPU_ID.log``` and ``` ./work_dirs/retina/$TIMESTAMP.log ``` . These two logs are the same. You can change the directions and names of the latter log files in Line 48 of ```./configs/MIAL.py``` .
 
 You can also use other files in the directory ``` './work_dirs/retina/ ``` if you like, they are as follows:
 
@@ -101,7 +105,7 @@ You can also use other files in the directory ``` './work_dirs/retina/ ``` if yo
 
   The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
 
-  An example code for loading these files is the Line 135-138 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 108-114 in the `./tools/train.py` file (which are in comments now).
 
 - **pth file `epoch_$EPOCH.pth` and `latest.pth`**
 
@@ -109,7 +113,7 @@ You can also use other files in the directory ``` './work_dirs/retina/ ``` if yo
 
   You can load the model state dictionary from them.
 
-  An example code for loading these files is the Line 174 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 109, 144-145 in the `./tools/train.py` file (which are in comments now).
 
 - **txt file `trainval_l07.txt`, `trainval_u07.txt`, `trainval_l12.txt` and `trainval_u12.txt` in each `cycle$CYCLE` directory**
 
