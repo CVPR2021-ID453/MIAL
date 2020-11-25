@@ -62,7 +62,7 @@ tar -xf VOCtrainval_11-May-2012.tar
 ```
 After that, please modify the corresponding dataset directory in this repository, they are located in:
 ```
-Line 1 of configs/debug.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+Line 1 of configs/MIAL.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 Please change the ``` $YOUR_DATASET_PATH ```s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
@@ -85,7 +85,7 @@ Please ignore the error ``` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.lo
 
 The ``` script.sh ``` file will use the GPU with the ID number ``` $YOUR_GPU_ID ``` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
 
-The log file will not flush in the terminal, but will be saved and updated in the file ```./log_nohup/nohup_$YOUR_GPU_ID.log``` and ``` ./work_dirs/retina/$TIMESTAMP.log ``` . These two logs are the same. You can change the directions and names of the latter log files in Line 36 of ```./configs/debug.py``` .
+The log file will not flush in the terminal, but will be saved and updated in the file ```./log_nohup/nohup_$YOUR_GPU_ID.log``` and ``` ./work_dirs/retina/$TIMESTAMP.log ``` . These two logs are the same. You can change the directions and names of the latter log files in Line 36 of ```./configs/MIAL.py``` .
 
 You can also use other files in the directory ``` './work_dirs/retina/ ``` if you like, they are as follows:
 
