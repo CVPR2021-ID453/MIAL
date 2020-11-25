@@ -4,7 +4,6 @@ _base_ = [
 ]
 
 data_root = '/DATA/disk1/Datasets/VOCdevkit/'
-# data_root = '/home/wan/Codes/ALDetection/mmdetection/data/VOCdevkit/'
 
 # dataset settings
 data = dict(
@@ -34,7 +33,7 @@ l_repeat = 2
 u_repeat = 2
 
 # my config
-work_dir = './work_dirs/retina_random3'
+work_dir = './work_dirs/retina'
 active_learning = dict(
     cycles=[0, 1, 2, 3, 4, 5, 6],
     budget=16551//40,
