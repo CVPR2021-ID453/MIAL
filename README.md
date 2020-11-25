@@ -21,10 +21,15 @@ You may change the name of the conda environment if you like, but you will need 
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) if you encounter any problems.
 
 ## Modification in mmcv packages
+
+To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the "epoch_based_runner" python file in the mmcv packages.
+
+Considering that this will affect all code that uses this environment, so I suggest you set up a separate environment for MIAL (i.e., the "mmdet" environment created above).
+
 ```
 cp -v epoch_based_runner.py ~/anaconda3/envs/mmdet/lib/python3.7/site-packages/mmcv/runner/
 ```
-The purpose to modify this python file is to train two dataloaders at the same time.
+
 
 ## Datasets preparation
 
