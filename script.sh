@@ -3,7 +3,7 @@
 CONFIG="configs/debug.py"
 GPUS=1
 CUDA_NUM=$1
-PORT=${PORT:-$((39100+$1*100))}
+PORT=${PORT:-$((30000+$1*100))}
 
 export CUDA_VISIBLE_DEVICES=$1
 rm $(dirname "$0")/log_nohup/nohup_$1.log
