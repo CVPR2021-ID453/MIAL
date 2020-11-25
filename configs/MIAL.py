@@ -1,5 +1,5 @@
 # Please change the dataset directory to your actual directory
-data_root = '$YOUR_DATASET_PATH/VOCdevkit'
+data_root = '$YOUR_DATASET_PATH/VOCdevkit/'
 
 _base_ = [
     './_base_/retinanet_r50_fpn.py', './_base_/voc0712.py',
