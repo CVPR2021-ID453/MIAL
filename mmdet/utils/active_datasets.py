@@ -22,7 +22,7 @@ def create_X_L_file(cfg, X_L, anns, cycle):
     # create labeled ann files
     X_L_path = []
     for ann, X_L_single, year in zip(anns, X_L, ['07', '12']):
-        save_folder = cfg.work_direction + '/cycle' + str(cycle)
+        save_folder = cfg.work_directory + '/cycle' + str(cycle)
         mmcv.mkdir_or_exist(save_folder)
         save_path = save_folder + '/trainval_X_L_' + year + '.txt'
         np.savetxt(save_path, ann[X_L_single], fmt='%s')
@@ -39,7 +39,7 @@ def create_X_U_file(cfg, X_U, anns, cycle):
     # create labeled ann files
     X_U_path = []
     for ann, X_U_single, year in zip(anns, X_U, ['07', '12']):
-        save_folder = cfg.work_direction + '/cycle' + str(cycle)
+        save_folder = cfg.work_directory + '/cycle' + str(cycle)
         mmcv.mkdir_or_exist(save_folder)
         save_path = save_folder + '/trainval_X_U_' + year + '.txt'
         np.savetxt(save_path, ann[X_U_single], fmt='%s')
