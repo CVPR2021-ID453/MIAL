@@ -14,7 +14,7 @@ from .nasfcos_head import NASFCOSHead
 from .pisa_retinanet_head import PISARetinaHead
 from .pisa_ssd_head import PISASSDHead
 from .reppoints_head import RepPointsHead
-from .MIALretina_head import MIALRetinaHead
+from .MIAL_retina_head import MIALRetinaHead
 from .retina_sepbn_head import RetinaSepBNHead
 from .rpn_head import RPNHead
 from .ssd_head import SSDHead
