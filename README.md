@@ -20,7 +20,7 @@ Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/t
 
 ## Modification in the mmcv Package
 
-To train two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ``` epoch_based_runner.py ``` in the mmcv package.
+To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ``` epoch_based_runner.py ``` in the mmcv package.
 
 Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MIAL (i.e., the ``` mmdet ```environment created above).
 
@@ -30,13 +30,13 @@ cp -v epoch_based_runner.py ~/anaconda3/envs/mmdet/lib/python3.7/site-packages/m
 
 ## Datasets Preparation
 
-Please download VOC2007 datasets (trainval+test) and VOC2012 datasets (trainval) from:
+Please download VOC2007 datasets (*trainval*+*test*) and VOC2012 datasets (*trainval*) from:
 
-VOC2007 (trainval): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
+VOC2007 (*trainval*): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 
-VOC2007 (test): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
+VOC2007 (*test*): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 
-VOC2012 (trainval): http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
+VOC2012 (*trainval*): http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 
 And after that, please ensure the file directory tree is as below:
 ```
@@ -73,7 +73,7 @@ And please use the absolute path (i.e., start with ``` ~/ ``` or ``` / ```) but 
 
 We recommend you to use a GPU but not a CPU to train and test, because it will greatly shorten the time.
 
-And we also recommend you to use only 1 GPU to do so, because there may be some problems on arranging the end of two dataloaders when you use several GPUs. The more GPUs you use, the more likely the training or test iteration will be interrupted suddenly.
+And we also recommend you to use a single GPU, because the usage of multi-GPU may result in errors caused by the multi-processing of the dataloader.
 
 If you use only 1 GPU, you can use the ``` script.sh ``` file directly as below:
 ```
