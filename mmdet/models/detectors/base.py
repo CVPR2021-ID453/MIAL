@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from collections import OrderedDict
-
+from tools.utils import losstype
 import mmcv
 import numpy as np
 import torch
@@ -156,8 +156,8 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
             assert 'proposals' not in kwargs
             return self.aug_test(imgs, img_metas, **kwargs)
 
-    @auto_fp16(apply_to=('img', ))
-    def forward(self, img, img_metas, return_loss=True, return_box=True, **kwargs):
+    @auto_fp16(apply_to=('x', ))
+    def forward(self, x, img_metas, return_loss=True, return_box=True, **kwargs):
         """Calls either :func:`forward_train` or :func:`forward_test` depending
         on whether ``return_loss`` is ``True``.
 
@@ -168,9 +168,9 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         the outer list indicating test time augmentations.
         """
         if return_loss:
-            return self.forward_train(img, img_metas, **kwargs)
+            return self.forward_train(x, img_metas, **kwargs)
         else:
-            return self.forward_test(img, img_metas, return_box=return_box, **kwargs)
+            return self.forward_test(x, img_metas, return_box=return_box, **kwargs)
 
     def _parse_losses(self, losses):
         """Parse the raw outputs (losses) of the network.
@@ -195,9 +195,14 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
                     f'{loss_name} is not a tensor or list of tensors')
 
         loss = sum(_value for _key, _value in log_vars.items()
-                   if 'loss' in _key)
+                   if 'l' in _key)
 
-        log_vars['loss'] = loss
+        if losstype.losstype == 0:
+            log_vars['L_det'] = loss
+        elif losstype.losstype == 1:
+            log_vars['L_wave_min'] = loss
+        elif losstype.losstype == 2:
+            log_vars['L_wave_max'] = loss
         for loss_name, loss_value in log_vars.items():
             # reduce loss when distributed training
             if dist.is_available() and dist.is_initialized():
