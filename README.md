@@ -78,7 +78,7 @@ We recommend you to use a GPU but not a CPU to train and test, because it will g
 
 And we also recommend you to use a single GPU, because the usage of multi-GPU may result in errors caused by the multi-processing of the dataloader.
 
-If you use only 1 GPU, you can use the ` script.sh ` file directly as below:
+If you use only a single GPU, you can use the ` script.sh ` file directly as below:
 ```
 chmod 777 ./script.sh
 ./script.sh $YOUR_GPU_ID
@@ -89,7 +89,7 @@ Please ignore the error ` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.log'
 
 The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
 
-The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/retina/$TIMESTAMP.log ` . These two logs are the same. You can change the directions and names of the latter log files in Line 48 of `./configs/MIAL.py` .
+The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/retina/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAL.py` .
 
 You can also use other files in the directory ` './work_dirs/retina/ ` if you like, they are as follows:
 
@@ -125,7 +125,7 @@ You can also use other files in the directory ` './work_dirs/retina/ ` if you li
 
 ## Code Structure
 ```
-├── $YOUR_ANACONDA_DIRECTORY
+├── $YOUR_ANACONDA_TORY
 │   ├── anaconda3
 │   │   ├── envs
 │   │   │   ├── $YOUR_ENVIRONMENT_NAME
@@ -167,3 +167,27 @@ You can also use other files in the directory ` './work_dirs/retina/ ` if you li
 │   ├── retina
 ├── script.sh
 ```
+
+The code files and folders shown above are the main part of MIAL, while other code files and folders are created following MMDetection to avoid potential problems.
+
+The explanation of each code file or folder is as follows:
+
+- **epoch_based_runner.py**: Code for training and test in each epoch, which can be called from `./apis/train.py`
+- **configs**: Configuration folder, including runnning settings, model settings, dataset settings and other custom settings for active learning and MIAL.
+- **log_nohup**: Log folder for storing log output on each GPU temporarily.
+- **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
+- **tools**: Outer training and test code for MIAL.
+  - **utils**: Utility functions.
+- **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
+- **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
+- **fsdet**
+  - **checkpoint**: Checkpoint code.
+  - **config**: Configuration code and default configurations.
+  - **data**: Dataset code.
+  - **engine**: Contains training and evaluation loops and hooks.
+  - **evaluation**: Evaluation code for different datasets.
+  - **layers**: Implementations of different layers used in models.
+  - **modeling**: Code for models, including backbones, proposal networks, and prediction heads.
+  - **solver**: Scheduler and optimizer code.
+  - **structures**: Data types, such as bounding boxes and image lists.
+  - **utils**: Utility functions.
