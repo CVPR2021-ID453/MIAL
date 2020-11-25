@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CONFIG="configs/debug.py"
+CONFIG="configs/MIAL.py"
 GPUS=1
 CUDA_NUM=$1
 PORT=${PORT:-$((30000+$1*100))}
