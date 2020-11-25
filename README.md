@@ -93,32 +93,32 @@ You can also use other files in the directory ``` './work_dirs/retina/ ``` if yo
 
   * #### JSON file `$TIMESTAMP.log.json`
 
-You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/retina/$TIMESTAMP.log` file.
+  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/retina/$TIMESTAMP.log` file.
 
   * #### npy file `L_cycle_$CYCLE.npy` and `U_cycle_$CYCLE.npy`
 
-The `$CYCLE` is an integer from 0 to 6, which are the active learning cycles.
+  The `$CYCLE` is an integer from 0 to 6, which are the active learning cycles.
 
-You can load the indexes of the labeled set and unlabeled set for each cycle from them.
+  You can load the indexes of the labeled set and unlabeled set for each cycle from them.
 
-The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
+  The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
 
-An example code for loading these files is the Line 135-138 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 135-138 in the `./tools/train.py` file (which are in comments now).
 
   * #### pth file `epoch_$EPOCH.pth` and `latest.pth`
 
-The `$EPOCH` is an integer from 0 to 2, which are the epochs of the last label set training.
+  The `$EPOCH` is an integer from 0 to 2, which are the epochs of the last label set training.
 
-You can load the model state dictionary from them.
+  You can load the model state dictionary from them.
 
-An example code for loading these files is the Line 174 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 174 in the `./tools/train.py` file (which are in comments now).
 
   * #### txt file `trainval_l07.txt`, `trainval_u07.txt`, `trainval_l12.txt` and `trainval_u12.txt` in each `cycle$CYCLE` directory
 
-The `$CYCLE` is the same as above.
+  The `$CYCLE` is the same as above.
 
-You can load the names of JPEG images of the labeled set and unlabeled set for each cycle from them.
+  You can load the names of JPEG images of the labeled set and unlabeled set for each cycle from them.
 
-"l" is for the labeled set and "u" is for the unlabeled set. "07" is for the PASCAL VOC 2007 *trainval* set and "12" is for the PASCAL VOC 2012 *trainval* set.
+  "l" is for the labeled set and "u" is for the unlabeled set. "07" is for the PASCAL VOC 2007 *trainval* set and "12" is for the PASCAL VOC 2012 *trainval* set.
 
 ## Parameters
