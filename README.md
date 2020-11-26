@@ -182,12 +182,12 @@ The explanation of each code file or folder is as follows:
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 - **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
   - **apis**: Folder
-    - **__init__.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
-    - **test.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
-    - **train.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+    - **\__init\__.py**: Code
+    - **test.py**: Code
+    - **train.py**: Code
   - **models**: Folder
     - **dense_heads**: Folder
-      - **__init__.py**: Code
+      - **\__init\__.py**: Code
       - **MIAL_head.py**: Code
       - **MIAL_retina_head.py**: Code
       - **base_dense_head.py**: Code
