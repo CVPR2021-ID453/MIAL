@@ -29,21 +29,18 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
     @property
     def with_shared_head(self):
         """bool: whether the detector has a shared head in the RoI Head"""
-        return hasattr(self.roi_head,
-                       'shared_head') and self.roi_head.shared_head is not None
+        return hasattr(self.roi_head, 'shared_head') and self.roi_head.shared_head is not None
 
     @property
     def with_bbox(self):
         """bool: whether the detector has a bbox head"""
-        return ((hasattr(self.roi_head, 'bbox_head')
-                 and self.roi_head.bbox_head is not None)
+        return ((hasattr(self.roi_head, 'bbox_head') and self.roi_head.bbox_head is not None)
                 or (hasattr(self, 'bbox_head') and self.bbox_head is not None))
 
     @property
     def with_mask(self):
         """bool: whether the detector has a mask head"""
-        return ((hasattr(self.roi_head, 'mask_head')
-                 and self.roi_head.mask_head is not None)
+        return ((hasattr(self.roi_head, 'mask_head') and self.roi_head.mask_head is not None)
                 or (hasattr(self, 'mask_head') and self.mask_head is not None))
 
     @abstractmethod
@@ -106,15 +103,12 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         for var, name in [(img, 'img'), (img_metas, 'img_metas')]:
             if not isinstance(var, list):
                 raise TypeError(f'{name} must be a list, but got {type(var)}')
-
         num_augs = len(img)
         if num_augs != len(img_metas):
-            raise ValueError(f'num of augmentations ({len(img)}) '
-                             f'!= num of image metas ({len(img_metas)})')
+            raise ValueError(f'num of augmentations ({len(img)}) != num of image metas ({len(img_metas)})')
         # TODO: remove the restriction of samples_per_gpu == 1 when prepared
         samples_per_gpu = img[0].size(0)
         assert samples_per_gpu == 1
-
         if num_augs == 1:
             return await self.async_simple_test(img[0], img_metas[0], **kwargs)
         else:
@@ -133,15 +127,12 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         for var, name in [(imgs, 'imgs'), (img_metas, 'img_metas')]:
             if not isinstance(var, list):
                 raise TypeError(f'{name} must be a list, but got {type(var)}')
-
         num_augs = len(imgs)
         if num_augs != len(img_metas):
-            raise ValueError(f'num of augmentations ({len(imgs)}) '
-                             f'!= num of image meta ({len(img_metas)})')
+            raise ValueError(f'num of augmentations ({len(imgs)}) != num of image meta ({len(img_metas)})')
         # TODO: remove the restriction of samples_per_gpu == 1 when prepared
         samples_per_gpu = imgs[0].size(0)
         assert samples_per_gpu == 1
-
         if num_augs == 1:
             # proposals (List[List[Tensor]]): the outer list indicates
             # test-time augs (multiscale, flip, etc.) and the inner list
@@ -191,12 +182,8 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
             elif isinstance(loss_value, list):
                 log_vars[loss_name] = sum(_loss.mean() for _loss in loss_value)
             else:
-                raise TypeError(
-                    f'{loss_name} is not a tensor or list of tensors')
-
-        loss = sum(_value for _key, _value in log_vars.items()
-                   if 'l' in _key)
-
+                raise TypeError(f'{loss_name} is not a tensor or list of tensors')
+        loss = sum(_value for _key, _value in log_vars.items() if 'l' in _key)
         if losstype.losstype == 0:
             log_vars['L_det'] = loss
         elif losstype.losstype == 1:
@@ -209,7 +196,6 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
                 loss_value = loss_value.data.clone()
                 dist.all_reduce(loss_value.div_(dist.get_world_size()))
             log_vars[loss_name] = loss_value.item()
-
         return loss, log_vars
 
     def train_step(self, data, optimizer):
@@ -241,10 +227,7 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         """
         losses = self(**data)
         loss, log_vars = self._parse_losses(losses)
-
-        outputs = dict(
-            loss=loss, log_vars=log_vars, num_samples=len(data['img_metas']))
-
+        outputs = dict(loss=loss, log_vars=log_vars, num_samples=len(data['img_metas']))
         return outputs
 
     def val_step(self, data, optimizer):
@@ -256,24 +239,11 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         """
         losses = self(**data)
         loss, log_vars = self._parse_losses(losses)
-
-        outputs = dict(
-            loss=loss, log_vars=log_vars, num_samples=len(data['img_metas']))
-
+        outputs = dict(loss=loss, log_vars=log_vars, num_samples=len(data['img_metas']))
         return outputs
 
-    def show_result(self,
-                    img,
-                    result,
-                    score_thr=0.3,
-                    bbox_color='green',
-                    text_color='green',
-                    thickness=1,
-                    font_scale=0.5,
-                    win_name='',
-                    show=False,
-                    wait_time=0,
-                    out_file=None):
+    def show_result(self, img, result, score_thr=0.3, bbox_color='green', text_color='green',
+                    thickness=1, font_scale=0.5, win_name='', show=False, wait_time=0, out_file=None):
         """Draw `result` over `img`.
 
         Args:
@@ -306,20 +276,14 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         else:
             bbox_result, segm_result = result, None
         bboxes = np.vstack(bbox_result)
-        labels = [
-            np.full(bbox.shape[0], i, dtype=np.int32)
-            for i, bbox in enumerate(bbox_result)
-        ]
+        labels = [np.full(bbox.shape[0], i, dtype=np.int32) for i, bbox in enumerate(bbox_result)]
         labels = np.concatenate(labels)
         # draw segmentation masks
         if segm_result is not None and len(labels) > 0:  # non empty
             segms = mmcv.concat_list(segm_result)
             inds = np.where(bboxes[:, -1] > score_thr)[0]
             np.random.seed(42)
-            color_masks = [
-                np.random.randint(0, 256, (1, 3), dtype=np.uint8)
-                for _ in range(max(labels) + 1)
-            ]
+            color_masks = [np.random.randint(0, 256, (1, 3), dtype=np.uint8) for _ in range(max(labels) + 1)]
             for i in inds:
                 i = int(i)
                 color_mask = color_masks[labels[i]]
@@ -329,20 +293,9 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         if out_file is not None:
             show = False
         # draw bounding boxes
-        mmcv.imshow_det_bboxes(
-            img,
-            bboxes,
-            labels,
-            class_names=self.CLASSES,
-            score_thr=score_thr,
-            bbox_color=bbox_color,
-            text_color=text_color,
-            thickness=thickness,
-            font_scale=font_scale,
-            win_name=win_name,
-            show=show,
-            wait_time=wait_time,
-            out_file=out_file)
-
+        mmcv.imshow_det_bboxes(img, bboxes, labels, class_names=self.CLASSES, score_thr=score_thr,
+                               bbox_color=bbox_color, text_color=text_color, thickness=thickness,
+                               font_scale=font_scale, win_name=win_name, show=show, wait_time=wait_time,
+                               out_file=out_file)
         if not (show or out_file):
             return img
