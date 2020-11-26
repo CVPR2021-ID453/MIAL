@@ -183,18 +183,18 @@ The explanation of each code file or folder is as follows:
 - **mmdet**: The core code folder for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
   - **apis**: The inner training, test and calculating uncertainty code folder of MIAL.
     - **\_\_init\_\_.py**: Some function initialization in the current folder.
-    - **test.py**: Code for testing the model and calculating uncertainty, which can be called from `./tools/train.py`
+    - **test.py**: Code for testing the model and calculating uncertainty, which can be called from `epoch_based_runner.py` and `./tools/train.py`.
     - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called from `./tools/train.py`.
   - **models**: The code folder with the details of network model architecture, training loss, forward propagation in test and calculating uncertainty.
     - **dense_heads**: The code folder of training loss and the network model architecture, especially the well-designed head architecture.
       - **\_\_init\_\_.py**: Some function initialization in the current folder.
-      - **MIAL_head.py**: Code
-      - **MIAL_retina_head.py**: Code
-      - **base_dense_head.py**: Code
-    - **detectors**: 
-      - **base.py**: Code
-      - **single_stage.py**: Code
-  - **utils**: The code folder for creating active learning datasets, which can be called from `./tools/train.py`
+      - **MIAL_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called from `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
+      - **MIAL_retina_head.py**: Code for building the MIAL model architecture, especially the well-designed head architecture, and define the forward output, which can be called from `./mmdet/models/dense_heads/MIAL_head.py`.
+      - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called from `./mmdet/models/detectors/single_stage.py`.
+    - **detectors**: The code folder of the forward propogation and backward propogation in the overall training, test and calculating uncertainty process.
+      - **base.py**: Code for arranging training loss to print and passing the loss and image information, which can be called from `epoch_based_runner.py`.
+      - **single_stage.py**: Code for extracting image features, getting bounding boxes from the model output and passing the loss, which can be called from `./mmdet/models/detectors/base.py`.
+  - **utils**: The code folder for creating active learning datasets, which can be called from `./tools/train.py`.
     - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle.
 - **tools**: The outer training and test code folder of MIAL.
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
