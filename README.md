@@ -174,7 +174,7 @@ The explanation of each code file or folder is as follows:
 
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called from `./apis/train.py`.
 - **configs**: Configuration folder, including runnning settings, model settings, dataset settings and other custom settings for active learning and MIAL.
-  - **\_base\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled from `.configs/MIAL.py`.
+  - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled from `.configs/MIAL.py`.
     - **default_runtime.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
     - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
     - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
@@ -182,7 +182,7 @@ The explanation of each code file or folder is as follows:
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 - **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
   - **apis**: Folder
-    - **\__init\__.py**: Code
+    - **\_\_init\_\_.py**: Code
     - **test.py**: Code
     - **train.py**: Code
   - **models**: Folder
