@@ -81,6 +81,7 @@ def multi_gpu_test(model, data_loader, tmpdir=None, gpu_collect=False):
     time.sleep(2)  # This line can prevent deadlock problem in some cases.
     for i, data in enumerate(data_loader):
         with torch.no_grad():
+            data.update({'x': data.pop('img')})
             y_head = model(return_loss=False, rescale=True, **data)
             # encode mask y_heads
         y_heads.append(y_head)
