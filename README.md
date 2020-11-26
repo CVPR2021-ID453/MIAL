@@ -194,8 +194,8 @@ The explanation of each code file or folder is as follows:
     - **detectors**: Folder
       - **base.py**: Code
       - **single_stage.py**: Code
-  - **utils**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
-    - **active_dataset.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
+  - **utils**: Folder
+    - **active_dataset.py**: Code
 - **tools**: Outer training and test code for MIAL.
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
