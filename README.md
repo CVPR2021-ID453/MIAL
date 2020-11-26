@@ -33,13 +33,13 @@ cp -v epoch_based_runner.py ~/anaconda3/envs/mmdet/lib/python3.7/site-packages/m
 
 ## Datasets Preparation
 
-Please download VOC2007 datasets (*trainval*+*test*) and VOC2012 datasets (*trainval*) from:
+Please download VOC2007 datasets ( *trainval* + *test* ) and VOC2012 datasets ( *trainval* ) from:
 
-VOC2007 (*trainval*): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
+VOC2007 ( *trainval* ): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 
-VOC2007 (*test*): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
+VOC2007 ( *test* ): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 
-VOC2012 (*trainval*): http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
+VOC2012 ( *trainval* ): http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 
 And after that, please ensure the file directory tree is as below:
 ```
@@ -175,12 +175,30 @@ The explanation of each code file or folder is as follows:
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called from `./apis/train.py`
 - **configs**: Configuration folder, including runnning settings, model settings, dataset settings and other custom settings for active learning and MIAL.
   - **\_base\_**: 
-    - **default_runtime.py**:
-    - **retinanet_r50_fpn.py**:
-    - **voc0712.py**:
+    - **default_runtime.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+    - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
+    - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
   - **MIAL.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called from `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 - **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
+  - **apis**: 
+    - **__init__.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+    - **test.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+    - **train.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+  - **models**: 
+    - **dense_heads**: 
+      - **apis**: 
+      - **__init__.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+      - **MIAL_head.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+      - **MIAL_retina_head.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+      - **base_dense_head.py**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
+    - **detectors**: 
+      - **default_runtime.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+      - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
+      - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
+  - **default_runtime.py**: Configuration code for running settings, which can be called from `./configs/MIAL.py`.
+  - **utils**: Configuration code for model training and test settings, which can be called from `./configs/MIAL.py`.
+    - **active_dataset.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
 - **tools**: Outer training and test code for MIAL.
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
