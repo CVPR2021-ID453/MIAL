@@ -180,23 +180,23 @@ The explanation of each code file or folder is as follows:
     - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data transformation, which can be called from `./configs/MIAL.py`.
   - **MIAL.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called from `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
-- **mmdet**: The core codes for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
-  - **apis**: Folder
-    - **\_\_init\_\_.py**: Code
-    - **test.py**: Code
-    - **train.py**: Code
-  - **models**: Folder
-    - **dense_heads**: Folder
-      - **\_\_init\_\_.py**: Code
+- **mmdet**: The core code folder for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
+  - **apis**: The inner training, test and calculating uncertainty code folder of MIAL.
+    - **\_\_init\_\_.py**: Some function initialization in the current folder.
+    - **test.py**: Code for testing the model and calculating uncertainty, which can be called from `./tools/train.py`
+    - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called from `./tools/train.py`.
+  - **models**: The code folder with the details of network model architecture, training loss, forward propagation in test and calculating uncertainty.
+    - **dense_heads**: The code folder of training loss and the network model architecture, especially the well-designed head architecture.
+      - **\_\_init\_\_.py**: Some function initialization in the current folder.
       - **MIAL_head.py**: Code
       - **MIAL_retina_head.py**: Code
       - **base_dense_head.py**: Code
-    - **detectors**: Folder
+    - **detectors**: 
       - **base.py**: Code
       - **single_stage.py**: Code
-  - **utils**: Folder
-    - **active_dataset.py**: Code
-- **tools**: Outer training and test code for MIAL.
+  - **utils**: The code folder for creating active learning datasets, which can be called from `./tools/train.py`
+    - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle.
+- **tools**: The outer training and test code folder of MIAL.
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
