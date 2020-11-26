@@ -194,8 +194,8 @@ The explanation of each code file or folder is as follows:
     - **detectors**: The code folder of the forward propogation and backward propogation in the overall training, test and calculating uncertainty process.
       - **base.py**: Code for arranging training loss to print and passing the loss and image information, which can be called from `epoch_based_runner.py`.
       - **single_stage.py**: Code for extracting image features, getting bounding boxes from the model output and passing the loss, which can be called from `./mmdet/models/detectors/base.py`.
-  - **utils**: The code folder for creating active learning datasets, which can be called from `./tools/train.py`.
-    - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle.
+  - **utils**: The code folder for creating active learning datasets.
+    - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called from `./tools/train.py`.
 - **tools**: The outer training and test code folder of MIAL.
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called from `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
