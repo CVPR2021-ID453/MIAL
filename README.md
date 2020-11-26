@@ -187,7 +187,7 @@ The explanation of each code file or folder is as follows:
     - **train.py**: Code
   - **models**: Folder
     - **dense_heads**: Folder
-      - **\__init\__.py**: Code
+      - **\_\_init\_\_.py**: Code
       - **MIAL_head.py**: Code
       - **MIAL_retina_head.py**: Code
       - **base_dense_head.py**: Code
