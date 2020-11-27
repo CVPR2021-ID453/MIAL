@@ -11,11 +11,9 @@ A TITAN V GPU and [CUDA 10.2](https://developer.nvidia.com/cuda-toolkit-archive)
 After anaconda3 installation, you can create a conda environment as below:
 
 ```
-conda create -n mmdet python=3.7 -y
-conda activate mmdet
+conda create -n mial python=3.7 -y
+conda activate mial
 ```
-
-You may change the name of the conda environment if you like, but you will need to pay attention to the following steps correspondingly if you do so.
 
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) and the [install.md](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md) of it for environment installation.
 
@@ -23,10 +21,10 @@ Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/t
 
 To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
 
-Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MIAL (i.e., the ` mmdet `environment created above).
+Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MIAL (i.e., the ` mial `environment created above).
 
 ```
-cp -v epoch_based_runner.py ~/anaconda3/envs/mmdet/lib/python3.7/site-packages/mmcv/runner/
+cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
 ```
 
 ## Datasets Preparation
@@ -126,7 +124,7 @@ You can also use other files in the directory ` './work_dirs/retina/ ` if you li
 ├── $YOUR_ANACONDA_TORY
 │   ├── anaconda3
 │   │   ├── envs
-│   │   │   ├── $YOUR_ENVIRONMENT_NAME
+│   │   │   ├── mial
 │   │   │   │   ├── lib
 │   │   │   │   │   ├── python3.7
 │   │   │   │   │   │   ├── site-packages
