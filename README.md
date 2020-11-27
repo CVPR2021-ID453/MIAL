@@ -85,13 +85,13 @@ Please ignore the error ` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.log'
 
 The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
 
-The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/retina/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAL.py` .
+The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MIAL/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAL.py` .
 
-You can also use other files in the directory ` './work_dirs/retina/ ` if you like, they are as follows:
+You can also use other files in the directory ` './work_dirs/MIAL/ ` if you like, they are as follows:
 
 - **JSON file `$TIMESTAMP.log.json`**
 
-  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/retina/$TIMESTAMP.log` file.
+  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MIAL/$TIMESTAMP.log` file.
 
 - **npy file `X_L_$CYCLE.npy` and `X_U_$CYCLE.npy`**
 
@@ -160,7 +160,7 @@ You can also use other files in the directory ` './work_dirs/retina/ ` if you li
 ├── tools
 │   ├── train.py
 ├── work_dirs
-│   ├── retina
+│   ├── MIAL
 ├── script.sh
 ```
 
