@@ -17,7 +17,7 @@ conda activate mmdet
 
 You may change the name of the conda environment if you like, but you will need to pay attention to the following steps correspondingly if you do so.
 
-Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) for environment installation.
+Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) and the [install.md](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md) of it for environment installation.
 
 ## Modification in the mmcv Package
 
