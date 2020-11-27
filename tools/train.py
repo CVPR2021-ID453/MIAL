@@ -142,7 +142,7 @@ def main():
 
         # # Please change it to the epoch which you want to load model at.
         # model_file_name = '/latest.pth'
-        # model.load_state_dict(torch.load(cfg.work_directory[:18] + last_timestamp + model_file_name)['state_dict'])
+        # model.load_state_dict(torch.load(cfg.work_directory[:16] + last_timestamp + model_file_name)['state_dict'])
 
         # load dataset
         datasets = [build_dataset(cfg.data.train)]
