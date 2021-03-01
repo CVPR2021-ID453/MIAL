@@ -1,3 +1,8 @@
+# ATTENTION
+THIS REPOSITORY WILL NO LONGER BE USED, PLEASE REFER TO [THIS NEW LINK](https://github.com/yuantn/MIAL).
+
+
+
 ## Introduction
 
 This is the code for *Multiple Instance Active Learning for Object Detection*, anonymous ID 453 for CVPR 2021.
